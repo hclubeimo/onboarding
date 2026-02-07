@@ -22,15 +22,7 @@ import {
   FileText,
   Activity
 } from 'lucide-react';
-
-const parseISO = (s: string) => {
-  if (!s) return new Date();
-  const parts = s.split('-');
-  const y = parseInt(parts[0], 10);
-  const m = parseInt(parts[1], 10);
-  const d = parts[2] ? parseInt(parts[2], 10) : 1;
-  return new Date(y, m - 1, d);
-};
+import { parseSafeDate } from '../lib/utils';
 
 const startOfMonth = (date: Date) => new Date(date.getFullYear(), date.getMonth(), 1);
 
@@ -107,8 +99,8 @@ const GanttTimeline: React.FC<GanttTimelineProps> = ({ client }) => {
   const stopDragging = () => setIsDragging(false);
 
   const getTaskStyle = (task: Task, index: number) => {
-    const start = parseISO(task.startDate);
-    const end = parseISO(task.endDate);
+    const start = parseSafeDate(task.startDate);
+    const end = parseSafeDate(task.endDate);
     const diffStart = differenceInDays(start, timelineStart);
     const duration = differenceInDays(end, start) + 1;
     
@@ -232,8 +224,8 @@ const GanttTimeline: React.FC<GanttTimelineProps> = ({ client }) => {
           <div className="relative pt-4 px-2" style={{ height: `${client.tasks.length * 55 + 80}px` }}>
             {client.tasks.map((task, idx) => {
               const style = getTaskStyle(task, idx);
-              const taskStart = parseISO(task.startDate);
-              const taskEnd = parseISO(task.endDate);
+              const taskStart = parseSafeDate(task.startDate);
+              const taskEnd = parseSafeDate(task.endDate);
               if (taskEnd < timelineStart || taskStart > timelineEnd) return null;
 
               let colorClass = 'bg-slate-100 border-slate-200 text-slate-700';
@@ -321,7 +313,7 @@ const GanttTimeline: React.FC<GanttTimelineProps> = ({ client }) => {
                   <div>
                     <p className="text-[10px] font-bold text-slate-400 uppercase">Período</p>
                     <p className="text-xs font-bold text-slate-700">
-                      {format(parseISO(previewTask.startDate), 'dd/MM')} - {format(parseISO(previewTask.endDate), 'dd/MM')}
+                      {format(parseSafeDate(previewTask.startDate), 'dd/MM')} - {format(parseSafeDate(previewTask.endDate), 'dd/MM')}
                     </p>
                   </div>
                 </div>

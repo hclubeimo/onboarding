@@ -15,8 +15,12 @@ export interface Task {
 }
 
 export interface Client {
-  id: string;
+  id: string;          // ID do cliente (ex: CLI-001)
+  internalId: string;  // UUID para controle interno da aplicação
   name: string;
+  email: string;
+  phone: string;
+  joiningDate: string; // Data de adesão
   tasks: Task[];
   createdAt: string;
 }
