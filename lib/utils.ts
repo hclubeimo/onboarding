@@ -1,10 +1,16 @@
 
-import { format, parseISO, differenceInDays, startOfMonth, addDays, eachDayOfInterval } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { format, differenceInDays } from 'date-fns';
+import { pt } from 'date-fns/locale/pt';
+
+const parseISO = (s: string) => {
+  if (!s) return new Date();
+  const [y, m, d] = s.split('-').map(Number);
+  return new Date(y, m - 1, d || 1);
+};
 
 export const formatDate = (dateStr: string) => {
   if (!dateStr) return '';
-  return format(parseISO(dateStr), "dd 'de' MMM", { locale: ptBR });
+  return format(parseISO(dateStr), "dd 'de' MMM", { locale: pt });
 };
 
 export const formatFullDate = (dateStr: string) => {

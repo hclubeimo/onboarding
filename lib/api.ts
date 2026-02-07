@@ -11,7 +11,7 @@ export const isApiConfigured = (): boolean => {
 
 export const fetchClientsFromSheets = async (): Promise<Client[]> => {
   try {
-    const response = await fetch(GOOGLE_SCRIPT_URL, {
+    const response = await fetch(`${GOOGLE_SCRIPT_URL}?action=getClients`, {
       method: 'GET',
       headers: { 'Accept': 'application/json' }
     });
@@ -26,9 +26,25 @@ export const fetchClientsFromSheets = async (): Promise<Client[]> => {
   }
 };
 
+export const fetchUsersFromSheets = async (): Promise<any[]> => {
+  try {
+    const response = await fetch(`${GOOGLE_SCRIPT_URL}?action=getUsers`, {
+      method: 'GET',
+      headers: { 'Accept': 'application/json' }
+    });
+    
+    if (!response.ok) throw new Error('Erro na resposta do servidor');
+    
+    const data = await response.json();
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    console.error('Erro de rede ao buscar utilizadores:', error);
+    return [];
+  }
+};
+
 export const saveClientsToSheets = async (clients: Client[]): Promise<void> => {
   try {
-    // Usamos 'no-cors' para o POST para evitar problemas de preflight/redirecionamento do Google Scripts
     await fetch(GOOGLE_SCRIPT_URL, {
       method: 'POST',
       mode: 'no-cors',
@@ -44,6 +60,5 @@ export const saveClientsToSheets = async (clients: Client[]): Promise<void> => {
   }
 };
 
-// Funções mantidas apenas para compatibilidade de tipos se necessário, mas não mais usadas para o URL
 export const getStoredScriptUrl = () => GOOGLE_SCRIPT_URL;
 export const setStoredScriptUrl = (_url: string) => {};

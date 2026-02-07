@@ -22,7 +22,7 @@ const ClientList: React.FC<ClientListProps> = ({ clients, isRemoveMode, onSelect
           </button>
           <div>
             <h2 className="text-2xl font-bold text-slate-800">
-              {isRemoveMode ? 'Remover Clientes' : 'Seus Clientes'}
+              {isRemoveMode ? 'Remover Clientes' : 'Os Seus Clientes'}
             </h2>
             <p className="text-sm text-slate-500">Total de {clients.length} processos ativos</p>
           </div>
@@ -33,8 +33,8 @@ const ClientList: React.FC<ClientListProps> = ({ clients, isRemoveMode, onSelect
         {clients.length === 0 ? (
           <div className="text-center py-20 bg-slate-50 rounded-3xl border border-dashed border-slate-200">
             <User className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-            <p className="text-slate-500 font-medium">Nenhum cliente cadastrado ainda.</p>
-            <p className="text-xs text-slate-400 mt-1">Comece adicionando um novo cliente no menu principal.</p>
+            <p className="text-slate-500 font-medium">Nenhum cliente registado ainda.</p>
+            <p className="text-xs text-slate-400 mt-1">Comece por adicionar um novo cliente no menu principal.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -54,7 +54,7 @@ const ClientList: React.FC<ClientListProps> = ({ clients, isRemoveMode, onSelect
                       </h3>
                       <div className="flex items-center gap-2 text-slate-400 text-xs mt-0.5">
                         <Calendar className="w-3 h-3" />
-                        <span>Criado em {formatDate(client.createdAt)}</span>
+                        <span>Criado a {formatDate(client.createdAt)}</span>
                       </div>
                     </div>
                   </div>

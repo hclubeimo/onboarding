@@ -21,4 +21,9 @@ export interface Client {
   createdAt: string;
 }
 
-export type AppView = 'home' | 'list' | 'add' | 'remove' | 'detail';
+export interface AuthUser {
+  username: string;
+  name: string;
+}
+
+export type AppView = 'login' | 'home' | 'list' | 'add' | 'remove' | 'detail';
